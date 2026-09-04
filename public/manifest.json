@@ -1,0 +1,18 @@
+{
+  "name": "MediCamp - Family Health Records & Doctor Vault",
+  "short_name": "MediCamp",
+  "description": "Unified Aadhaar-linked Family Health Records, Prescriptions, and Doctor Portal",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F2F2F7",
+  "theme_color": "#0284C7",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

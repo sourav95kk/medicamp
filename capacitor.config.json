@@ -1,0 +1,12 @@
+{
+  "appId": "com.medicamp.health",
+  "appName": "MediCamp",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "ios": {
+    "contentInset": "always"
+  }
+}

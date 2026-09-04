@@ -21,9 +21,10 @@ import DoctorRegisterModal from './components/doctor/DoctorRegisterModal';
 // Common & Auth
 import RoleSwitcherModal from './components/common/RoleSwitcherModal';
 import AuthModal from './components/auth/AuthModal';
+import InstallAppModal from './components/common/InstallAppModal';
 
 function MainAppContent() {
-  const { currentMode, activeTab } = useApp();
+  const { currentMode, activeTab, showInstallModal, setShowInstallModal } = useApp();
 
   return (
     <div className="min-h-screen bg-[#F2F2F7] flex flex-col font-sans selection:bg-sky-500 selection:text-white">
@@ -52,6 +53,7 @@ function MainAppContent() {
       <IOSTabBar />
 
       {/* Global Modals */}
+      <InstallAppModal isOpen={showInstallModal} onClose={() => setShowInstallModal(false)} />
       <AuthModal />
       <RoleSwitcherModal />
       <DoctorRegisterModal />

@@ -33,6 +33,7 @@ export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   // Modals state
+  const [showInstallModal, setShowInstallModal] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showRoleSwitcherModal, setShowRoleSwitcherModal] = useState(false);
   const [showDoctorRegisterModal, setShowDoctorRegisterModal] = useState(false);
@@ -492,6 +493,8 @@ export const AppProvider = ({ children }) => {
     addDoctorConsultation,
     loading,
     // Modals
+    showInstallModal,
+    setShowInstallModal,
     showAuthModal,
     setShowAuthModal,
     showRoleSwitcherModal,

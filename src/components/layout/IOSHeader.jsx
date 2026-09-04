@@ -1,6 +1,6 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
-import { Stethoscope, User, ShieldAlert, Activity, Plus, LogIn, LogOut, Database } from 'lucide-react';
+import { Stethoscope, User, ShieldAlert, Activity, Plus, LogIn, LogOut, Database, Smartphone } from 'lucide-react';
 import { isSupabaseConfigured } from '../../lib/supabaseClient';
 
 export default function IOSHeader() {
@@ -13,6 +13,7 @@ export default function IOSHeader() {
     setShowAddRecordModal,
     setShowEmergencyCardModal,
     setShowAuthModal,
+    setShowInstallModal,
     signOut
   } = useApp();
 
@@ -83,7 +84,15 @@ export default function IOSHeader() {
             </>
           )}
 
-          {/* Role Switch Pill */}
+          {/* Install Mobile App Button */}
+          <button
+            onClick={() => setShowInstallModal(true)}
+            className="hidden md:flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all ios-press"
+            title="Install on Mobile"
+          >
+            <Smartphone className="w-3.5 h-3.5 text-sky-600" />
+            <span>Install App</span>
+          </button>
           <button
             onClick={() => setShowRoleSwitcherModal(true)}
             className={`p-2 sm:px-3 sm:py-1.5 rounded-xl border flex items-center gap-1.5 text-xs font-semibold transition-all ios-press ${
