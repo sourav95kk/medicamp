@@ -2,64 +2,103 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --ios-bg: #F2F2F7;
+  --ios-card: #FFFFFF;
+  --ios-separator: #C6C6C8;
+  --ios-separator-light: rgba(60, 60, 67, 0.12);
+  --ios-blue: #007AFF;
+  --ios-green: #34C759;
+  --ios-red: #FF3B30;
+  --ios-orange: #FF9500;
+  --ios-teal: #30B0C7;
+  --ios-indigo: #5856D6;
+  --ios-label: #000000;
+  --ios-secondary-label: #8E8E93;
+  --ios-tertiary-label: #C7C7CC;
+}
+
 @layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+
   body {
-    @apply bg-[#F2F2F7] text-[#1C1C1E] antialiased selection:bg-ios-blue/20 selection:text-ios-blue;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    -webkit-tap-highlight-color: transparent;
+    background-color: var(--ios-bg);
+    color: var(--ios-label);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    overflow-x: hidden;
   }
 }
 
-/* Custom iOS Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.25);
+/* iOS Frosted Glass Header & Bar */
+.ios-nav-blur {
+  background: rgba(242, 242, 247, 0.85);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
 }
 
-/* Glassmorphism helpers */
-.glass-header {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+.ios-tab-blur {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.glass-sheet {
+.ios-sheet-blur {
   background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
 }
 
-/* Smooth spring transition helper */
-.ios-press {
-  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease;
-}
-.ios-press:active {
-  transform: scale(0.97);
-  opacity: 0.85;
+/* iOS Grouped Inset Card */
+.ios-grouped-card {
+  background: #FFFFFF;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
-/* Animated pulse */
-@keyframes pulse-gentle {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+/* iOS Squircle Icon Badge */
+.ios-squircle {
+  border-radius: 22.37%;
 }
 
-.animate-pulse-gentle {
-  animation: pulse-gentle 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+/* iOS Native Button Feedback */
+.ios-tap {
+  transition: transform 0.12s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.12s ease;
+}
+.ios-tap:active {
+  transform: scale(0.96);
+  opacity: 0.82;
+}
+
+/* iOS Inset Row Separator */
+.ios-row-divider {
+  position: relative;
+}
+.ios-row-divider:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 56px;
+  height: 0.5px;
+  background-color: rgba(60, 60, 67, 0.15);
+}
+
+/* Scrollbar clean hide */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
