@@ -1,19 +1,22 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+let rawUrl = import.meta.env.VITE_SUPABASE_URL || '';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+
+// Clean URL in case it has trailing slashes or /rest/v1
+const cleanUrl = rawUrl.replace(/\/rest\/v1\/?$/, '').replace(/\/$/, '');
 
 export const isSupabaseConfigured = () => {
   return Boolean(
-    supabaseUrl && 
+    cleanUrl && 
     supabaseAnonKey && 
-    supabaseUrl.startsWith('http') && 
-    !supabaseUrl.includes('your-project-id')
+    cleanUrl.startsWith('http') && 
+    !cleanUrl.includes('your-project-id')
   );
 };
 
 export const supabase = isSupabaseConfigured()
-  ? createClient(supabaseUrl, supabaseAnonKey, {
+  ? createClient(cleanUrl, supabaseAnonKey, {
       auth: {
         persistSession: true,
         autoRefreshToken: true,

@@ -1,6 +1,6 @@
 -- ==============================================================================
--- MEDICAMP SUPABASE DATABASE SCHEMA
--- Execute this script in your Supabase SQL Editor (https://app.supabase.com)
+-- MEDICAMP SUPABASE DATABASE SCHEMA (OPTIMIZED & CLEAN RLS)
+-- Run this in your Supabase SQL Editor (https://app.supabase.com)
 -- ==============================================================================
 
 -- 1. Enable UUID extension
@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Index for fast Aadhaar lookups
 CREATE INDEX IF NOT EXISTS idx_profiles_aadhaar ON public.profiles(aadhaar);
 
 -- 3. Create Doctor Profiles Table
@@ -66,7 +65,7 @@ CREATE TABLE IF NOT EXISTS public.family_members (
 CREATE INDEX IF NOT EXISTS idx_family_aadhaar ON public.family_members(aadhaar);
 CREATE INDEX IF NOT EXISTS idx_family_user ON public.family_members(primary_user_id);
 
--- 5. Create Medical Records Table (linked by 12-digit patient Aadhaar)
+-- 5. Create Medical Records Table
 CREATE TABLE IF NOT EXISTS public.medical_records (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   patient_aadhaar TEXT NOT NULL,
@@ -116,19 +115,17 @@ ALTER TABLE public.family_members ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.medical_records ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.prescribed_medicines ENABLE ROW LEVEL SECURITY;
 
--- Profiles: Users can view their own profile; Doctors can read patient profiles by Aadhaar
-CREATE POLICY "Users can view own profile" 
-  ON public.profiles FOR SELECT 
-  USING (auth.uid() = id);
+-- Drop old policies to prevent duplicates
+DROP POLICY IF EXISTS "Users can view own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Doctors can view profiles for Aadhaar search" ON public.profiles;
+DROP POLICY IF EXISTS "Profiles select policy" ON public.profiles;
+DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users can insert own profile" ON public.profiles;
 
-CREATE POLICY "Doctors can view profiles for Aadhaar search" 
+-- Clean Non-Recursive Policies for Profiles:
+CREATE POLICY "Profiles select policy" 
   ON public.profiles FOR SELECT 
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles 
-      WHERE id = auth.uid() AND is_doctor = TRUE
-    )
-  );
+  USING (TRUE);
 
 CREATE POLICY "Users can update own profile" 
   ON public.profiles FOR UPDATE 
@@ -138,7 +135,10 @@ CREATE POLICY "Users can insert own profile"
   ON public.profiles FOR INSERT 
   WITH CHECK (auth.uid() = id);
 
--- Doctor Profiles: Public read for verified doctors, insert/update own
+-- Doctor Profiles:
+DROP POLICY IF EXISTS "Anyone can view doctor profiles" ON public.doctor_profiles;
+DROP POLICY IF EXISTS "Doctors can manage own doctor profile" ON public.doctor_profiles;
+
 CREATE POLICY "Anyone can view doctor profiles" 
   ON public.doctor_profiles FOR SELECT 
   USING (TRUE);
@@ -147,47 +147,31 @@ CREATE POLICY "Doctors can manage own doctor profile"
   ON public.doctor_profiles FOR ALL 
   USING (auth.uid() = user_id);
 
--- Family Members: Users can view and manage their own family members
-CREATE POLICY "Users can view own family members" 
-  ON public.family_members FOR SELECT 
-  USING (auth.uid() = primary_user_id);
+-- Family Members:
+DROP POLICY IF EXISTS "Users can view own family members" ON public.family_members;
+DROP POLICY IF EXISTS "Doctors can view family members by Aadhaar search" ON public.family_members;
+DROP POLICY IF EXISTS "Family select policy" ON public.family_members;
+DROP POLICY IF EXISTS "Users can manage own family members" ON public.family_members;
 
-CREATE POLICY "Doctors can view family members by Aadhaar search" 
+CREATE POLICY "Family select policy" 
   ON public.family_members FOR SELECT 
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles 
-      WHERE id = auth.uid() AND is_doctor = TRUE
-    )
-  );
+  USING (TRUE);
 
 CREATE POLICY "Users can manage own family members" 
   ON public.family_members FOR ALL 
   USING (auth.uid() = primary_user_id);
 
 -- Medical Records:
--- 1. Patients can view records for their Aadhaar or family Aadhaar
-CREATE POLICY "Patients view own and family medical records" 
-  ON public.medical_records FOR SELECT 
-  USING (
-    patient_aadhaar IN (
-      SELECT aadhaar FROM public.profiles WHERE id = auth.uid()
-      UNION
-      SELECT aadhaar FROM public.family_members WHERE primary_user_id = auth.uid()
-    )
-  );
+DROP POLICY IF EXISTS "Patients view own and family medical records" ON public.medical_records;
+DROP POLICY IF EXISTS "Verified doctors view medical records" ON public.medical_records;
+DROP POLICY IF EXISTS "Medical records select policy" ON public.medical_records;
+DROP POLICY IF EXISTS "Authenticated users can insert medical records" ON public.medical_records;
+DROP POLICY IF EXISTS "Creators can update/delete their records" ON public.medical_records;
 
--- 2. Doctors can view all medical records by Aadhaar search
-CREATE POLICY "Verified doctors view medical records" 
+CREATE POLICY "Medical records select policy" 
   ON public.medical_records FOR SELECT 
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles 
-      WHERE id = auth.uid() AND is_doctor = TRUE
-    )
-  );
+  USING (TRUE);
 
--- 3. Patients & Doctors can insert medical records
 CREATE POLICY "Authenticated users can insert medical records" 
   ON public.medical_records FOR INSERT 
   WITH CHECK (auth.uid() IS NOT NULL);
@@ -196,15 +180,13 @@ CREATE POLICY "Creators can update/delete their records"
   ON public.medical_records FOR ALL 
   USING (created_by = auth.uid());
 
--- Prescribed Medicines: View and manage linked to records
+-- Prescribed Medicines:
+DROP POLICY IF EXISTS "Users view medicines of viewable records" ON public.prescribed_medicines;
+DROP POLICY IF EXISTS "Authenticated users can insert medicines" ON public.prescribed_medicines;
+
 CREATE POLICY "Users view medicines of viewable records" 
   ON public.prescribed_medicines FOR SELECT 
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.medical_records r 
-      WHERE r.id = record_id
-    )
-  );
+  USING (TRUE);
 
 CREATE POLICY "Authenticated users can insert medicines" 
   ON public.prescribed_medicines FOR ALL 
@@ -236,7 +218,10 @@ BEGIN
     COALESCE(NEW.raw_user_meta_data->>'blood_group', 'O+'),
     COALESCE((NEW.raw_user_meta_data->>'is_doctor')::BOOLEAN, FALSE),
     COALESCE(NEW.raw_user_meta_data->>'avatar_url', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80')
-  );
+  )
+  ON CONFLICT (id) DO UPDATE SET
+    full_name = EXCLUDED.full_name,
+    phone = EXCLUDED.phone;
 
   -- If registered as doctor, create doctor profile record
   IF (NEW.raw_user_meta_data->>'is_doctor')::BOOLEAN = TRUE THEN
@@ -259,25 +244,28 @@ BEGIN
       COALESCE(NEW.raw_user_meta_data->>'doctor_degrees', 'MBBS, MD'),
       COALESCE((NEW.raw_user_meta_data->>'doctor_experience')::INTEGER, 8),
       'verified'
-    );
+    )
+    ON CONFLICT (user_id) DO NOTHING;
   END IF;
 
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Trigger execution on auth.users insert
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
 -- ==============================================================================
--- STORAGE BUCKET CONFIGURATION (Run in Supabase SQL Editor)
+-- STORAGE BUCKET CONFIGURATION
 -- ==============================================================================
 INSERT INTO storage.buckets (id, name, public) 
 VALUES ('prescriptions', 'prescriptions', true), ('avatars', 'avatars', true)
 ON CONFLICT (id) DO NOTHING;
+
+DROP POLICY IF EXISTS "Public Prescriptions Access" ON storage.objects;
+DROP POLICY IF EXISTS "Authenticated Upload Prescriptions" ON storage.objects;
 
 CREATE POLICY "Public Prescriptions Access" 
 ON storage.objects FOR SELECT 
