@@ -8,6 +8,10 @@ const AppContext = createContext(null);
 export const AppProvider = ({ children }) => {
   // Session & Auth state
   const [session, setSession] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const saved = localStorage.getItem('medicamp_is_authenticated');
+    return saved ? JSON.parse(saved) : false; // Default to false so Login Screen shows when app opens
+  });
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem('medicamp_user');
     return saved ? JSON.parse(saved) : INITIAL_USER;
@@ -43,6 +47,10 @@ export const AppProvider = ({ children }) => {
   const [selectedRecordForDetail, setSelectedRecordForDetail] = useState(null);
 
   // Local Storage Sync
+  useEffect(() => {
+    localStorage.setItem('medicamp_is_authenticated', JSON.stringify(isAuthenticated));
+  }, [isAuthenticated]);
+
   useEffect(() => {
     localStorage.setItem('medicamp_user', JSON.stringify(user));
   }, [user]);
@@ -168,9 +176,12 @@ export const AppProvider = ({ children }) => {
   const signIn = async (email, password) => {
     if (isSupabaseConfigured() && supabase) {
       const res = await supabase.auth.signInWithPassword({ email, password });
+      if (!res.error) {
+        setIsAuthenticated(true);
+      }
       return res;
     } else {
-      // Local fallback signin simulation
+      setIsAuthenticated(true);
       if (email.toLowerCase().includes('doc') || user.isDoctor) {
         loginAsDemoUser('doctor');
       } else {
@@ -202,9 +213,11 @@ export const AppProvider = ({ children }) => {
           }
         }
       });
+      if (!res.error) {
+        setIsAuthenticated(true);
+      }
       return res;
     } else {
-      // Offline/Local account creation
       const newUser = {
         id: `usr_${Date.now()}`,
         name: signUpData.fullName,
@@ -220,6 +233,7 @@ export const AppProvider = ({ children }) => {
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
       };
       setUser(newUser);
+      setIsAuthenticated(true);
       if (signUpData.isDoctor) {
         setCurrentMode('doctor');
       } else {
@@ -235,12 +249,13 @@ export const AppProvider = ({ children }) => {
       await supabase.auth.signOut();
     }
     setSession(null);
+    setIsAuthenticated(false);
     setCurrentMode('patient');
-    setShowAuthModal(true);
   };
 
   // 1-Click Demo Login Helper
   const loginAsDemoUser = (role) => {
+    setIsAuthenticated(true);
     if (role === 'doctor') {
       setUser(INITIAL_USER);
       setCurrentMode('doctor');
@@ -467,6 +482,8 @@ export const AppProvider = ({ children }) => {
   };
 
   const value = {
+    isAuthenticated,
+    setIsAuthenticated,
     user,
     setUser,
     session,

@@ -21,18 +21,30 @@ import DoctorRegisterModal from './components/doctor/DoctorRegisterModal';
 // Common & Auth
 import RoleSwitcherModal from './components/common/RoleSwitcherModal';
 import AuthModal from './components/auth/AuthModal';
+import AuthScreen from './components/auth/AuthScreen';
 import InstallAppModal from './components/common/InstallAppModal';
 
 function MainAppContent() {
-  const { currentMode, activeTab, showInstallModal, setShowInstallModal } = useApp();
+  const { isAuthenticated, currentMode, activeTab, showInstallModal, setShowInstallModal } = useApp();
 
+  // If user is not logged in, show default full-screen Login Screen on app launch
+  if (!isAuthenticated) {
+    return (
+      <>
+        <AuthScreen />
+        <InstallAppModal isOpen={showInstallModal} onClose={() => setShowInstallModal(false)} />
+      </>
+    );
+  }
+
+  // Once authenticated, show full native iOS app
   return (
-    <div className="min-h-screen bg-[#F2F2F7] flex flex-col font-sans selection:bg-sky-500 selection:text-white">
+    <div className="min-h-screen bg-[#F2F2F7] flex flex-col font-sans selection:bg-blue-600 selection:text-white">
       {/* iOS Header */}
       <IOSHeader />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 pt-5 pb-24">
+      <main className="flex-1 max-w-xl w-full mx-auto px-4 pt-4 pb-24">
         {currentMode === 'patient' ? (
           <>
             {activeTab === 'timeline' && <PatientDashboard />}
