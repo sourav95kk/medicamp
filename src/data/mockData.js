@@ -1,511 +1,414 @@
 /**
- * Seed data for MediCamp with realistic patient histories,
- * family members, doctor profiles, and medicine dictionary.
+ * Seed data matching the exact MyHealth+ screenshot references
  */
 
 export const INITIAL_USER = {
-  id: 'usr_self',
-  name: 'Rahul Sharma',
+  id: 'usr_sourav',
+  name: 'Sourav Kumar',
   relation: 'Self',
-  age: 34,
+  age: 32,
   gender: 'Male',
-  dob: '1992-04-15',
-  aadhaar: '548291038472',
+  dob: '1993-03-14',
+  aadhaar: '548291031234',
+  maskedAadhaar: '**** 1234',
   phone: '+91 98765 43210',
-  email: 'rahul.sharma@example.com',
+  email: 'sourav@example.com',
   bloodGroup: 'O+',
-  emergencyContact: {
-    name: 'Priya Sharma (Spouse)',
-    phone: '+91 98765 43211'
-  },
-  allergies: ['Penicillin', 'Sulfa Drugs'],
-  chronicConditions: ['Hypertension (Mild)'],
+  address: 'Bengaluru, Karnataka',
+  allergies: ['Penicillin'],
+  chronicConditions: ['None'],
   avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-  isDoctor: true, // Registered as doctor for instant toggle demo capability
+  avatarInitial: 'S',
+  isDoctor: false,
   doctorDetails: {
-    regNumber: 'MCI-2016-89412',
-    council: 'Delhi Medical Council',
-    specialty: 'Internal Medicine / Consultant Physician',
-    hospital: 'Max Super Speciality Hospital, Saket',
+    regNumber: 'MCI-2018-89412',
+    council: 'Karnataka Medical Council',
+    specialty: 'General Physician',
+    hospital: 'City Care Hospital',
     degrees: 'MBBS, MD (Medicine)',
-    experienceYears: 10
+    experienceYears: 8,
+    verificationStatus: 'verified'
   }
 };
 
 export const INITIAL_FAMILY = [
   {
-    id: 'usr_priya',
-    name: 'Priya Sharma',
+    id: 'fam_anita',
+    name: 'Anita Kumar',
     relation: 'Spouse',
-    age: 32,
+    age: 30,
     gender: 'Female',
-    dob: '1994-08-22',
-    aadhaar: '891047263519',
+    dob: '1995-07-18',
+    aadhaar: '891047265678',
+    maskedAadhaar: '**** 5678',
     phone: '+91 98765 43211',
-    email: 'priya.s@example.com',
+    email: 'anita@example.com',
     bloodGroup: 'B+',
-    emergencyContact: {
-      name: 'Rahul Sharma',
-      phone: '+91 98765 43210'
-    },
-    allergies: ['Dust Mites', 'Peanuts'],
-    chronicConditions: ['Hypothyroidism'],
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80'
+    allergies: ['Dust'],
+    chronicConditions: ['None'],
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+    badgeColor: 'bg-pink-100 text-pink-700'
   },
   {
-    id: 'usr_aarav',
-    name: 'Aarav Sharma',
+    id: 'fam_aarav',
+    name: 'Aarav Kumar',
     relation: 'Son',
     age: 6,
     gender: 'Male',
     dob: '2020-11-05',
-    aadhaar: '348109257182',
+    aadhaar: '348109259012',
+    maskedAadhaar: '**** 9012',
     phone: '+91 98765 43210',
-    email: 'rahul.sharma@example.com',
+    email: 'sourav@example.com',
     bloodGroup: 'O+',
-    emergencyContact: {
-      name: 'Rahul & Priya',
-      phone: '+91 98765 43210'
-    },
-    allergies: ['None known'],
+    allergies: ['None'],
     chronicConditions: ['None'],
-    avatar: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=150&auto=format&fit=crop&q=80'
+    avatar: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=150&auto=format&fit=crop&q=80',
+    badgeColor: 'bg-orange-100 text-orange-700'
   },
   {
-    id: 'usr_sunita',
-    name: 'Sunita Sharma',
+    id: 'fam_savitri',
+    name: 'Savitri Devi',
     relation: 'Mother',
-    age: 62,
+    age: 58,
     gender: 'Female',
-    dob: '1964-02-18',
-    aadhaar: '918273645019',
+    dob: '1968-02-14',
+    aadhaar: '918273643456',
+    maskedAadhaar: '**** 3456',
     phone: '+91 98765 43212',
-    email: 'sunita.sharma@example.com',
+    email: 'savitri@example.com',
     bloodGroup: 'A+',
-    emergencyContact: {
-      name: 'Rahul Sharma (Son)',
-      phone: '+91 98765 43210'
-    },
-    allergies: ['Aspirin', 'Iodine Contrast'],
-    chronicConditions: ['Type 2 Diabetes', 'Osteoarthritis'],
-    avatar: 'https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=150&auto=format&fit=crop&q=80'
+    allergies: ['Sulfa Drugs'],
+    chronicConditions: ['Hypertension'],
+    avatar: 'https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=150&auto=format&fit=crop&q=80',
+    badgeColor: 'bg-amber-100 text-amber-800'
   }
 ];
 
 export const INITIAL_RECORDS = [
   {
-    id: 'rec_101',
-    patientAadhaar: '548291038472', // Rahul Sharma
-    patientName: 'Rahul Sharma',
-    date: '2026-08-14',
-    doctorName: 'Dr. Vikram Malhotra',
-    doctorSpecialty: 'Cardiologist',
-    hospitalName: 'Apollo Hospitals, New Delhi',
-    department: 'Cardiology OPD',
-    symptoms: 'Mild chest tightness after strenuous workouts, occasional palpitations',
-    symptomDuration: '2 weeks',
+    id: 'rec_1',
+    patientAadhaar: '548291031234',
+    patientName: 'Sourav Kumar',
+    isSelf: true,
+    date: '12 Sep 2025',
+    doctorName: 'Dr. Rakesh Sharma',
+    doctorSpecialty: 'General Physician',
+    hospitalName: 'City Care Hospital',
+    department: 'General OPD',
+    symptoms: 'Fever, cough, body ache for 3 days',
+    symptomDuration: '3 days',
     severity: 'Moderate',
-    diagnosis: 'Sinus Tachycardia & Stage-1 Essential Hypertension',
+    diagnosis: 'Viral Fever',
+    medicinesCount: 3,
     prescriptionImageUrl: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop&q=80',
     medicines: [
       {
-        name: 'Telmisartan 40mg (Telma 40)',
-        dosage: '40mg',
-        frequency: '1-0-0 (Once daily)',
-        timing: 'Morning after breakfast',
-        duration: '30 days',
-        instructions: 'Take with full glass of water. Monitor BP weekly.'
+        name: 'Paracetamol 500 mg',
+        dosage: '1 tablet',
+        frequency: 'Twice daily',
+        timing: 'After meals',
+        duration: '5 days',
+        instructions: 'Take when fever > 100°F'
       },
       {
-        name: 'Metoprolol Succinate 25mg (Betaloc)',
-        dosage: '25mg',
-        frequency: '0-0-1 (Once daily at night)',
-        timing: 'Night before sleep',
-        duration: '15 days',
-        instructions: 'Do not discontinue abruptly.'
+        name: 'Azithromycin 500 mg',
+        dosage: '1 tablet',
+        frequency: 'Once daily',
+        timing: 'After lunch',
+        duration: '3 days',
+        instructions: 'Complete 3-day course'
+      },
+      {
+        name: 'Cetirizine 10 mg',
+        dosage: '1 tablet',
+        frequency: 'At night',
+        timing: 'Bedtime',
+        duration: '5 days',
+        instructions: 'For allergic cough relief'
+      },
+      {
+        name: 'Pantoprazole 40 mg',
+        dosage: '1 tablet',
+        frequency: 'Before food',
+        timing: 'Empty stomach (Morning)',
+        duration: '5 days',
+        instructions: 'Antacid protection'
       }
     ],
-    testsOrdered: ['ECG (12-Lead)', 'Lipid Profile', 'Echocardiogram (2D)'],
-    followUpDate: '2026-09-14',
-    doctorNotes: 'BP recorded 142/90 mmHg. Stress test scheduled. Advised low sodium diet & 30 mins brisk walk daily.'
+    doctorNotes: 'Advised warm water hydration and 3 days rest. Review if fever persists beyond 5 days.'
   },
   {
-    id: 'rec_102',
-    patientAadhaar: '548291038472', // Rahul Sharma
-    date: '2026-06-20',
-    doctorName: 'Dr. Ramesh Sethi',
-    doctorSpecialty: 'General Physician',
-    hospitalName: 'Fortis Escorts Clinic',
+    id: 'rec_2',
+    patientAadhaar: '548291031234',
+    patientName: 'Sourav Kumar',
+    isSelf: true,
+    date: '21 Aug 2025',
+    doctorName: 'Dr. Priya Mehta',
+    doctorSpecialty: 'Consultant Physician',
+    hospitalName: 'Sunrise Clinic',
     department: 'Internal Medicine',
-    symptoms: 'High grade fever (102°F), body aches, severe sore throat, dry cough',
-    symptomDuration: '4 days',
-    severity: 'High',
-    diagnosis: 'Acute Viral Pharyngitis with upper respiratory tract infection',
+    symptoms: 'Stomach pain, acidity, nausea after food',
+    symptomDuration: '2 days',
+    severity: 'Mild',
+    diagnosis: 'Acute Gastritis',
+    medicinesCount: 2,
     prescriptionImageUrl: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=600&auto=format&fit=crop&q=80',
     medicines: [
       {
-        name: 'Dolo 650 (Paracetamol 650mg)',
-        dosage: '650mg',
-        frequency: '1-1-1 (Thrice daily)',
-        timing: 'After meals',
-        duration: '5 days',
-        instructions: 'For fever > 100°F or body ache'
-      },
-      {
-        name: 'Augmentin 625 Duo (Amoxicillin + Clavulanate)',
-        dosage: '625mg',
-        frequency: '1-0-1 (Twice daily)',
-        timing: 'After heavy meal',
-        duration: '5 days',
-        instructions: 'Complete the entire 5-day course'
-      },
-      {
-        name: 'Pan 40 (Pantoprazole 40mg)',
-        dosage: '40mg',
-        frequency: '1-0-0 (Once daily)',
-        timing: 'Empty stomach 30 mins before breakfast',
-        duration: '5 days',
-        instructions: 'Prevents gastric irritation from antibiotics'
-      },
-      {
-        name: 'Montair-LC (Montelukast + Levocetirizine)',
-        dosage: '10mg / 5mg',
-        frequency: '0-0-1 (Night only)',
-        timing: 'Bedtime',
+        name: 'Pantoprazole 40 mg',
+        dosage: '1 tablet',
+        frequency: 'Once daily',
+        timing: 'Before breakfast',
         duration: '7 days',
-        instructions: 'May cause mild drowsiness'
+        instructions: 'Empty stomach'
+      },
+      {
+        name: 'Meftal Spas',
+        dosage: '1 tablet',
+        frequency: 'SOS (As needed)',
+        timing: 'After food',
+        duration: '3 days',
+        instructions: 'Only during abdominal spasms'
       }
     ],
-    testsOrdered: ['Complete Blood Count (CBC)', 'CRP'],
-    followUpDate: '2026-06-26',
-    doctorNotes: 'CBC normal. Throat swab negative for strep. Advised warm saline gargles & hydration.'
+    doctorNotes: 'Avoid spicy/oily food. Drink plenty of tender coconut water.'
   },
   {
-    id: 'rec_103',
-    patientAadhaar: '891047263519', // Priya Sharma
-    patientName: 'Priya Sharma',
-    date: '2026-07-10',
-    doctorName: 'Dr. Meenakshi Joshi',
-    doctorSpecialty: 'Endocrinologist',
-    hospitalName: 'Max Healthcare, Saket',
-    department: 'Endocrinology',
-    symptoms: 'Fatigue, lethargy, cold sensitivity, mild weight gain',
-    symptomDuration: '1 month',
+    id: 'rec_3',
+    patientAadhaar: '891047265678',
+    patientName: 'Anita Kumar',
+    isSelf: false,
+    date: '10 Jun 2025',
+    doctorName: 'Dr. Amit Verma',
+    doctorSpecialty: 'Internal Medicine',
+    hospitalName: 'LifeCare Hospital',
+    department: 'Health Checkup Center',
+    symptoms: 'Annual health checkup, mild fatigue',
+    symptomDuration: '1 week',
     severity: 'Mild',
-    diagnosis: 'Subclinical Hypothyroidism (Elevated TSH)',
+    diagnosis: 'Annual checkup - Normal (Mild Vit D deficiency)',
+    medicinesCount: 1,
     prescriptionImageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&auto=format&fit=crop&q=80',
     medicines: [
       {
-        name: 'Thyronorm 50mcg (Levothyroxine Sodium)',
-        dosage: '50mcg',
-        frequency: '1-0-0 (Daily)',
-        timing: 'Empty stomach at 6:00 AM with water',
-        duration: '90 days',
-        instructions: 'Do not eat or drink tea/coffee for 45 minutes after taking this tablet.'
+        name: 'Vitamin D3 60K (Cholecalciferol)',
+        dosage: '1 sachet / capsule',
+        frequency: 'Once weekly',
+        timing: 'With warm milk on Sundays',
+        duration: '8 weeks',
+        instructions: 'For bone and immunity health'
       }
     ],
-    testsOrdered: ['Thyroid Profile (T3, T4, TSH)', 'Serum Vitamin D3'],
-    followUpDate: '2026-10-10',
-    doctorNotes: 'TSH was 6.8 uIU/mL. Starting low dose Thyronorm. Retest TSH after 3 months.'
+    doctorNotes: 'All vitals and routine blood tests normal. Retest Vitamin D after 2 months.'
   },
   {
-    id: 'rec_104',
-    patientAadhaar: '348109257182', // Aarav Sharma
-    patientName: 'Aarav Sharma',
-    date: '2026-08-01',
-    doctorName: 'Dr. Rajesh Gupta',
-    doctorSpecialty: 'Pediatrician',
-    hospitalName: 'Rainbow Children Hospital',
-    department: 'Pediatrics OPD',
-    symptoms: 'Runny nose, sneezing fits, night cough',
+    id: 'rec_4',
+    patientAadhaar: '348109259012',
+    patientName: 'Aarav Kumar',
+    isSelf: false,
+    date: '15 Jan 2025',
+    doctorName: 'Dr. Neha Singh',
+    doctorSpecialty: 'Dermatologist',
+    hospitalName: 'Metro Hospital',
+    department: 'Dermatology OPD',
+    symptoms: 'Skin allergy, mild red rashes on arms',
     symptomDuration: '3 days',
     severity: 'Mild',
-    diagnosis: 'Allergic Rhinitis & Seasonal Bronchial Hyperreactivity',
+    diagnosis: 'Contact Dermatitis / Skin allergy',
+    medicinesCount: 2,
     prescriptionImageUrl: 'https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=600&auto=format&fit=crop&q=80',
     medicines: [
       {
-        name: 'Syrup Meftal-P (Mefenamic Acid)',
-        dosage: '5ml',
-        frequency: 'SOS (Only if temp > 100°F)',
-        timing: 'After food',
-        duration: '3 days',
-        instructions: 'Max 3 doses in 24 hours'
-      },
-      {
-        name: 'Syrup Ascoril-LS (Levosalbutamol + Ambroxol)',
-        dosage: '2.5ml',
-        frequency: '1-0-1 (Twice daily)',
-        timing: 'After food',
-        duration: '5 days',
-        instructions: 'Shake bottle well before use'
-      }
-    ],
-    testsOrdered: [],
-    followUpDate: '2026-08-07',
-    doctorNotes: 'Chest clear bilaterally. Weight: 21 kg. Advised steam inhalation and nasal saline drops.'
-  },
-  {
-    id: 'rec_105',
-    patientAadhaar: '918273645019', // Sunita Sharma
-    patientName: 'Sunita Sharma',
-    date: '2026-07-28',
-    doctorName: 'Dr. Arvind Verma',
-    doctorSpecialty: 'Diabetologist & Geriatric Care',
-    hospitalName: 'Medanta - The Medicity',
-    department: 'Diabetology OPD',
-    symptoms: 'Knee joint stiffness in the morning, mild tingling in feet',
-    symptomDuration: '2 months',
-    severity: 'Moderate',
-    diagnosis: 'Type 2 Diabetes Mellitus with Mild Diabetic Neuropathy & Bilateral Knee Osteoarthritis',
-    prescriptionImageUrl: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop&q=80',
-    medicines: [
-      {
-        name: 'Glycomet-GP 1 (Metformin 500mg + Glimepiride 1mg)',
-        dosage: '500mg / 1mg',
-        frequency: '1-0-1 (Twice daily)',
-        timing: 'Just before breakfast and dinner',
-        duration: '60 days',
-        instructions: 'Check fasting and post-prandial blood sugar every fortnight'
-      },
-      {
-        name: 'Pregabalin 75mg + Methylcobalamin (Maxgalin-M)',
-        dosage: '75mg',
-        frequency: '0-0-1 (Night)',
-        timing: 'At bedtime',
-        duration: '30 days',
-        instructions: 'For neuropathic pain/tingling'
-      },
-      {
-        name: 'Cartigen Forte (Glucosamine + Chondroitin)',
+        name: 'Allegra 120 mg (Fexofenadine)',
         dosage: '1 tablet',
-        frequency: '1-0-0 (Morning)',
-        timing: 'After breakfast',
-        duration: '60 days',
-        instructions: 'Joint health supplement'
+        frequency: 'Once daily',
+        timing: 'Night before sleep',
+        duration: '5 days',
+        instructions: 'Non-drowsy anti-allergic'
+      },
+      {
+        name: 'Calamine Soothing Lotion',
+        dosage: 'Apply topically',
+        frequency: 'Twice daily',
+        timing: 'Morning and evening',
+        duration: '7 days',
+        instructions: 'Apply gently on affected areas'
       }
     ],
-    testsOrdered: ['HbA1c', 'Fast Blood Sugar', 'PP Blood Sugar', 'X-Ray Bilateral Knees (AP/Lat)'],
-    followUpDate: '2026-09-28',
-    doctorNotes: 'HbA1c is 7.2%. Foot sensation tested. Advised diabetic footwear and knee strengthening physiotherapy.'
+    doctorNotes: 'Keep skin clean and dry. Avoid synthetic clothes.'
   }
 ];
 
-// Presets for the interactive Smart Prescription OCR testing
+export const DOCTOR_RECENT_PATIENTS = [
+  {
+    id: 'pat_rahul',
+    name: 'Rahul Mehta',
+    aadhaar: '489102344321',
+    maskedAadhaar: '**** 4321',
+    age: 38,
+    gender: 'Male',
+    dob: '1987-05-12',
+    bloodGroup: 'B+',
+    lastVisit: '12 Sep 2025',
+    symptoms: 'Seasonal fever, sore throat',
+    diagnosis: 'Viral Pharyngitis',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 'pat_priya',
+    name: 'Priya Sharma',
+    aadhaar: '748192038765',
+    maskedAadhaar: '**** 8765',
+    age: 29,
+    gender: 'Female',
+    dob: '1996-09-24',
+    bloodGroup: 'A+',
+    lastVisit: '11 Sep 2025',
+    symptoms: 'Migraine headache, nausea',
+    diagnosis: 'Acute Migraine',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 'pat_amit',
+    name: 'Amit Patel',
+    aadhaar: '249103841122',
+    maskedAadhaar: '**** 1122',
+    age: 45,
+    gender: 'Male',
+    dob: '1980-01-15',
+    bloodGroup: 'O+',
+    lastVisit: '10 Sep 2025',
+    symptoms: 'High blood pressure routine review',
+    diagnosis: 'Essential Hypertension Stage 1',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80'
+  }
+];
+
+export const MOCK_NOTIFICATIONS = [
+  {
+    id: 'notif_1',
+    type: 'reminder',
+    category: 'Reminders',
+    title: 'Medicine Reminder',
+    message: 'Time to take your medicine (Paracetamol 500 mg)',
+    time: '2 hours ago',
+    iconColor: 'bg-blue-100 text-blue-600'
+  },
+  {
+    id: 'notif_2',
+    type: 'feature',
+    category: 'Updates',
+    title: 'New Feature',
+    message: 'AI prescription scan is now available!',
+    time: '1 day ago',
+    iconColor: 'bg-emerald-100 text-emerald-600'
+  },
+  {
+    id: 'notif_3',
+    type: 'record',
+    category: 'Updates',
+    title: 'Medical Record Added',
+    message: 'Medical record added successfully (Dr. Rakesh Sharma)',
+    time: '2 days ago',
+    iconColor: 'bg-purple-100 text-purple-600'
+  },
+  {
+    id: 'notif_4',
+    type: 'profile',
+    category: 'Updates',
+    title: 'Profile Updated',
+    message: 'Your profile has been updated',
+    time: '3 days ago',
+    iconColor: 'bg-slate-100 text-slate-600'
+  }
+];
+
 export const SAMPLE_PRESCRIPTION_PRESETS = [
   {
-    id: 'preset_fever',
-    title: 'Seasonal Fever & Infection (General Physician)',
-    doctor: 'Dr. Ramesh Sethi, MD',
-    hospital: 'Fortis Memorial Hospital',
-    imageUrl: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&auto=format&fit=crop&q=80',
-    extractedText: `
-FORTIS MEMORIAL RESEARCH HOSPITAL
-Dr. Ramesh Sethi, MBBS, MD (Internal Medicine) - Reg No: DMC/14589
-Patient: Rahul Sharma | Date: 05-Sep-2026
-
-Rx:
-1. Tab. Dolo 650 (Paracetamol 650mg)
-   Dosage: 1 Tab - TDS (1-1-1) - After meals - 5 days
-   Note: For fever > 100 F and body aches
-
-2. Tab. Augmentin 625 Duo (Amoxicillin 500mg + Clavulanic 125mg)
-   Dosage: 1 Tab - BD (1-0-1) - After food - 5 days
-   Note: Antibiotic course, do not skip
-
-3. Tab. Pan 40 (Pantoprazole 40mg)
-   Dosage: 1 Tab - OD (1-0-0) - 30 mins before breakfast - 5 days
-   Note: Antacid
-
-4. Tab. Montair-LC (Montelukast + Levocetirizine)
-   Dosage: 1 Tab - HS (0-0-1) - Night at bedtime - 7 days
-   Note: For dry cough & allergic relief
-
-Advice: Plenty of fluids, warm saline gargles. Review in 5 days.
-    `,
+    id: 'sample_fever',
+    title: 'Fever & Cold Prescription',
+    doctor: 'Dr. Rakesh Sharma',
+    hospital: 'City Care Hospital',
+    specialty: 'General Physician',
+    imageUrl: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop&q=80',
+    extractedText: 'Rx: Dr. Rakesh Sharma, City Care Hospital\nParacetamol 500 mg 1-0-1 5 days after meals\nAzithromycin 500 mg 0-1-0 3 days after lunch\nCetirizine 10 mg 0-0-1 5 days bedtime\nPantoprazole 40 mg 1-0-0 5 days empty stomach',
     parsedMedicines: [
       {
-        name: 'Dolo 650 (Paracetamol 650mg)',
-        dosage: '650mg',
-        frequency: '1-1-1 (Thrice daily)',
+        name: 'Paracetamol 500 mg',
+        dosage: '1 tablet',
+        frequency: 'Twice daily',
         timing: 'After meals',
         duration: '5 days',
-        instructions: 'For fever > 100°F and body aches'
+        instructions: 'Take when fever > 100°F'
       },
       {
-        name: 'Augmentin 625 Duo (Amoxicillin + Clavulanate)',
-        dosage: '625mg',
-        frequency: '1-0-1 (Twice daily)',
-        timing: 'After food',
-        duration: '5 days',
-        instructions: 'Antibiotic course, do not skip'
-      },
-      {
-        name: 'Pan 40 (Pantoprazole 40mg)',
-        dosage: '40mg',
-        frequency: '1-0-0 (Once daily)',
-        timing: 'Before breakfast (Empty stomach)',
-        duration: '5 days',
-        instructions: 'Antacid'
-      },
-      {
-        name: 'Montair-LC (Montelukast + Levocetirizine)',
-        dosage: '10mg / 5mg',
-        frequency: '0-0-1 (Night only)',
-        timing: 'Bedtime',
-        duration: '7 days',
-        instructions: 'For dry cough & allergic relief'
-      }
-    ]
-  },
-  {
-    id: 'preset_cardio',
-    title: 'Cardiology & Blood Pressure (Max Healthcare)',
-    doctor: 'Dr. Ananya Sen, MD, DM (Cardiology)',
-    hospital: 'Max Super Speciality Hospital',
-    imageUrl: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&auto=format&fit=crop&q=80',
-    extractedText: `
-MAX SUPER SPECIALITY HOSPITAL, SAKET
-Department of Cardiology
-Dr. Ananya Sen, MD (Med), DM (Cardio) - MCI Reg: 2018-4491
-
-Rx:
-1. Tab. Telma 40 (Telmisartan 40mg)
-   Dosage: 1 Tab - OD (1-0-0) - Morning after breakfast - 30 days
-   
-2. Tab. Betaloc 25 (Metoprolol Succinate 25mg)
-   Dosage: 1 Tab - OD (0-0-1) - Night after dinner - 30 days
-
-3. Tab. Rosuvas 10 (Rosuvastatin 10mg)
-   Dosage: 1 Tab - OD (0-0-1) - Bedtime - 30 days
-
-4. Tab. Ecosprin 75 (Aspirin 75mg Gastro-resistant)
-   Dosage: 1 Tab - OD (0-1-0) - After lunch - 30 days
-    `,
-    parsedMedicines: [
-      {
-        name: 'Telma 40 (Telmisartan 40mg)',
-        dosage: '40mg',
-        frequency: '1-0-0 (Morning)',
-        timing: 'Morning after breakfast',
-        duration: '30 days',
-        instructions: 'Blood pressure control'
-      },
-      {
-        name: 'Betaloc 25 (Metoprolol Succinate 25mg)',
-        dosage: '25mg',
-        frequency: '0-0-1 (Night)',
-        timing: 'Night after dinner',
-        duration: '30 days',
-        instructions: 'Heart rate regulation'
-      },
-      {
-        name: 'Rosuvas 10 (Rosuvastatin 10mg)',
-        dosage: '10mg',
-        frequency: '0-0-1 (Bedtime)',
-        timing: 'Bedtime',
-        duration: '30 days',
-        instructions: 'Cholesterol management'
-      },
-      {
-        name: 'Ecosprin 75 (Aspirin 75mg)',
-        dosage: '75mg',
-        frequency: '0-1-0 (Afternoon)',
+        name: 'Azithromycin 500 mg',
+        dosage: '1 tablet',
+        frequency: 'Once daily',
         timing: 'After lunch',
-        duration: '30 days',
-        instructions: 'Antiplatelet cardiprotection'
+        duration: '3 days',
+        instructions: 'Complete 3-day course'
+      },
+      {
+        name: 'Cetirizine 10 mg',
+        dosage: '1 tablet',
+        frequency: 'At night',
+        timing: 'Bedtime',
+        duration: '5 days',
+        instructions: 'For allergic cough relief'
+      },
+      {
+        name: 'Pantoprazole 40 mg',
+        dosage: '1 tablet',
+        frequency: 'Before food',
+        timing: 'Empty stomach (Morning)',
+        duration: '5 days',
+        instructions: 'Antacid protection'
       }
     ]
   },
   {
-    id: 'preset_ortho',
-    title: 'Orthopedic & Joint Pain (Apollo Clinic)',
-    doctor: 'Dr. Sandeep Kapoor, MS (Ortho)',
-    hospital: 'Apollo Orthopaedic Centre',
-    imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop&q=80',
-    extractedText: `
-APOLLO ORTHOPAEDICS
-Dr. Sandeep Kapoor, MS (Ortho), DNB - Reg: 2011-0982
-
-Rx:
-1. Tab. Zerodol-SP (Aceclofenac 100mg + Paracetamol 325mg + Serratiopeptidase 15mg)
-   Dosage: 1 Tab - BD (1-0-1) - After meals - 5 days
-   Note: Pain & swelling relief
-
-2. Tab. Pantocid DSR (Pantoprazole + Domperidone)
-   Dosage: 1 Cap - OD (1-0-0) - Empty stomach - 7 days
-
-3. Tab. Shelcal-500 (Calcium 500mg + Vitamin D3 250 IU)
-   Dosage: 1 Tab - OD (1-0-0) - After breakfast - 60 days
-   
-4. Tab. Neurobion Forte (Vitamin B Complex + B12)
-   Dosage: 1 Tab - OD (0-0-1) - Night - 30 days
-    `,
+    id: 'sample_gastric',
+    title: 'Gastritis Prescription',
+    doctor: 'Dr. Priya Mehta',
+    hospital: 'Sunrise Clinic',
+    specialty: 'Consultant Physician',
+    imageUrl: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=600&auto=format&fit=crop&q=80',
+    extractedText: 'Rx: Dr. Priya Mehta, Sunrise Clinic\nPantoprazole 40 mg 1-0-0 7 days before breakfast\nMeftal Spas 1-0-1 SOS 3 days after food',
     parsedMedicines: [
       {
-        name: 'Zerodol-SP (Aceclofenac + Paracetamol + Serratiopeptidase)',
+        name: 'Pantoprazole 40 mg',
         dosage: '1 tablet',
-        frequency: '1-0-1 (Twice daily)',
-        timing: 'After meals',
-        duration: '5 days',
-        instructions: 'Pain & anti-inflammatory'
-      },
-      {
-        name: 'Pantocid DSR (Pantoprazole + Domperidone)',
-        dosage: '40mg / 30mg',
-        frequency: '1-0-0 (Morning)',
-        timing: 'Empty stomach (Morning)',
+        frequency: 'Once daily',
+        timing: 'Before breakfast',
         duration: '7 days',
-        instructions: 'Gastric protection'
+        instructions: 'Empty stomach'
       },
       {
-        name: 'Shelcal-500 (Calcium + Vitamin D3)',
-        dosage: '500mg',
-        frequency: '1-0-0 (Morning)',
-        timing: 'After breakfast',
-        duration: '60 days',
-        instructions: 'Bone density supplement'
-      },
-      {
-        name: 'Neurobion Forte (Vitamin B-Complex)',
+        name: 'Meftal Spas',
         dosage: '1 tablet',
-        frequency: '0-0-1 (Night)',
-        timing: 'Night before sleep',
-        duration: '30 days',
-        instructions: 'Nerve health supplement'
+        frequency: 'SOS (As needed)',
+        timing: 'After food',
+        duration: '3 days',
+        instructions: 'Only during abdominal spasms'
       }
     ]
   }
 ];
 
-// Common Indian & international medicine dictionary for OCR matching
 export const MEDICINE_DICTIONARY = [
+  { name: 'Paracetamol', generic: 'Acetaminophen 500mg/650mg', defaultDosage: '500mg', defaultFreq: '1-0-1', defaultTiming: 'After food' },
   { name: 'Dolo 650', generic: 'Paracetamol 650mg', defaultDosage: '650mg', defaultFreq: '1-1-1', defaultTiming: 'After meals' },
-  { name: 'Crocin 650', generic: 'Paracetamol 650mg', defaultDosage: '650mg', defaultFreq: '1-1-1', defaultTiming: 'After meals' },
-  { name: 'Augmentin 625 Duo', generic: 'Amoxicillin + Clavulanate', defaultDosage: '625mg', defaultFreq: '1-0-1', defaultTiming: 'After food' },
-  { name: 'Azithral 500', generic: 'Azithromycin 500mg', defaultDosage: '500mg', defaultFreq: '1-0-0', defaultTiming: 'After lunch' },
+  { name: 'Azithromycin', generic: 'Azithromycin 500mg', defaultDosage: '500mg', defaultFreq: '0-1-0', defaultTiming: 'After food' },
+  { name: 'Augmentin 625', generic: 'Amoxicillin + Clavulanic Acid', defaultDosage: '625mg', defaultFreq: '1-0-1', defaultTiming: 'After meals' },
+  { name: 'Pantoprazole', generic: 'Pantoprazole 40mg', defaultDosage: '40mg', defaultFreq: '1-0-0', defaultTiming: 'Empty stomach (Morning)' },
   { name: 'Pan 40', generic: 'Pantoprazole 40mg', defaultDosage: '40mg', defaultFreq: '1-0-0', defaultTiming: 'Empty stomach (Morning)' },
-  { name: 'Pantocid DSR', generic: 'Pantoprazole + Domperidone', defaultDosage: '40mg/30mg', defaultFreq: '1-0-0', defaultTiming: 'Empty stomach' },
-  { name: 'Razo 20', generic: 'Rabeprazole 20mg', defaultDosage: '20mg', defaultFreq: '1-0-0', defaultTiming: 'Empty stomach' },
-  { name: 'Montair-LC', generic: 'Montelukast + Levocetirizine', defaultDosage: '10mg/5mg', defaultFreq: '0-0-1', defaultTiming: 'Night at bedtime' },
-  { name: 'Allegra 120', generic: 'Fexofenadine 120mg', defaultDosage: '120mg', defaultFreq: '1-0-0', defaultTiming: 'Morning' },
-  { name: 'Cetzine 10', generic: 'Cetirizine 10mg', defaultDosage: '10mg', defaultFreq: '0-0-1', defaultTiming: 'Night' },
-  { name: 'Telma 40', generic: 'Telmisartan 40mg', defaultDosage: '40mg', defaultFreq: '1-0-0', defaultTiming: 'Morning' },
-  { name: 'Telma-H', generic: 'Telmisartan + Hydrochlorothiazide', defaultDosage: '40mg/12.5mg', defaultFreq: '1-0-0', defaultTiming: 'Morning' },
-  { name: 'Betaloc 25', generic: 'Metoprolol 25mg', defaultDosage: '25mg', defaultFreq: '0-0-1', defaultTiming: 'Night' },
-  { name: 'Amlong 5', generic: 'Amlodipine 5mg', defaultDosage: '5mg', defaultFreq: '1-0-0', defaultTiming: 'Morning' },
-  { name: 'Glycomet 500', generic: 'Metformin 500mg', defaultDosage: '500mg', defaultFreq: '1-0-1', defaultTiming: 'With meals' },
-  { name: 'Glycomet-GP 1', generic: 'Metformin + Glimepiride', defaultDosage: '500mg/1mg', defaultFreq: '1-0-1', defaultTiming: 'Before meals' },
-  { name: 'Thyronorm 50', generic: 'Levothyroxine 50mcg', defaultDosage: '50mcg', defaultFreq: '1-0-0', defaultTiming: 'Empty stomach (Morning 6am)' },
-  { name: 'Thyronorm 25', generic: 'Levothyroxine 25mcg', defaultDosage: '25mcg', defaultFreq: '1-0-0', defaultTiming: 'Empty stomach (Morning 6am)' },
-  { name: 'Zerodol-SP', generic: 'Aceclofenac + Paracetamol + Serratiopeptidase', defaultDosage: '1 tablet', defaultFreq: '1-0-1', defaultTiming: 'After food' },
-  { name: 'Combiflam', generic: 'Ibuprofen + Paracetamol', defaultDosage: '1 tablet', defaultFreq: '1-0-1', defaultTiming: 'After food' },
-  { name: 'Shelcal 500', generic: 'Calcium + Vitamin D3', defaultDosage: '500mg', defaultFreq: '1-0-0', defaultTiming: 'After breakfast' },
-  { name: 'Neurobion Forte', generic: 'Vitamin B Complex', defaultDosage: '1 tablet', defaultFreq: '0-0-1', defaultTiming: 'Night' },
-  { name: 'Becosules Z', generic: 'Vitamin B Complex + Zinc', defaultDosage: '1 capsule', defaultFreq: '1-0-0', defaultTiming: 'After lunch' },
-  { name: 'Rosuvas 10', generic: 'Rosuvastatin 10mg', defaultDosage: '10mg', defaultFreq: '0-0-1', defaultTiming: 'Night' },
-  { name: 'Atorva 10', generic: 'Atorvastatin 10mg', defaultDosage: '10mg', defaultFreq: '0-0-1', defaultTiming: 'Night' },
-  { name: 'Ascoril-D Plus', generic: 'Dextromethorphan + Chlorpheniramine', defaultDosage: '10ml', defaultFreq: '1-1-1', defaultTiming: 'After meals' },
-  { name: 'Ascoril-LS', generic: 'Levosalbutamol + Ambroxol', defaultDosage: '5ml', defaultFreq: '1-0-1', defaultTiming: 'After meals' },
-  { name: 'Meftal Spas', generic: 'Dicyclomine + Mefenamic Acid', defaultDosage: '1 tablet', defaultFreq: 'SOS (As needed)', defaultTiming: 'After food' },
-  { name: 'Ecosprin 75', generic: 'Aspirin 75mg', defaultDosage: '75mg', defaultFreq: '0-1-0', defaultTiming: 'After lunch' }
+  { name: 'Cetirizine', generic: 'Cetirizine HCl 10mg', defaultDosage: '10mg', defaultFreq: '0-0-1', defaultTiming: 'Bedtime' },
+  { name: 'Allegra 120', generic: 'Fexofenadine 120mg', defaultDosage: '120mg', defaultFreq: '0-0-1', defaultTiming: 'Night before sleep' },
+  { name: 'Telmisartan 40', generic: 'Telmisartan 40mg', defaultDosage: '40mg', defaultFreq: '1-0-0', defaultTiming: 'Morning with water' },
+  { name: 'Metformin 500', generic: 'Metformin HCl 500mg', defaultDosage: '500mg', defaultFreq: '1-0-1', defaultTiming: 'With meals' },
+  { name: 'Vitamin D3', generic: 'Cholecalciferol 60,000 IU', defaultDosage: '60,000 IU', defaultFreq: 'Once weekly', defaultTiming: 'With warm milk' },
+  { name: 'Meftal Spas', generic: 'Mefenamic Acid + Dicyclomine', defaultDosage: '1 tablet', defaultFreq: 'SOS', defaultTiming: 'After food' }
 ];
+
